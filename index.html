@@ -63,7 +63,8 @@ h3{margin:0;font-size:17px;line-height:1.35}
 @media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .board{background:#16336B}}
 :root[data-theme="dark"] .board{background:#16336B}
 .clock{font-size:48px;line-height:1;margin:0}
-.clock small{font-family:"Noto Sans KR",sans-serif;font-size:13px;color:#B9D3F5;margin-left:8px;font-weight:500}
+.nw{white-space:nowrap}
+.clock small{white-space:nowrap;font-family:"Noto Sans KR",sans-serif;font-size:13px;color:#B9D3F5;margin-left:8px;font-weight:500}
 .next{margin-top:14px;display:grid;gap:10px}
 .next .item{background:rgba(255,255,255,.1);border-radius:12px;padding:12px 14px;display:grid;grid-template-columns:76px 1fr;gap:10px;align-items:center}
 .next .t{font-family:"Black Han Sans",sans-serif;font-size:26px;color:var(--orange)}
@@ -85,7 +86,8 @@ h3{margin:0;font-size:17px;line-height:1.35}
 .show .meta{font-size:13px;color:var(--muted);margin-top:2px}
 .floor{display:inline-block;font-size:12px;font-weight:700;border-radius:4px;padding:0 6px;margin-right:6px;background:var(--sky);color:var(--navy)}
 .badge{display:inline-block;font-size:12px;font-weight:700;color:var(--orange-ink);margin-left:6px}
-.badge.thea{color:var(--navy);background:var(--sky);border-radius:4px;padding:0 6px}
+.badge.thea,.badge.kind{color:var(--navy);background:var(--sky);border-radius:4px;padding:0 6px}
+.next .badge.kind{font-weight:500}
 .routebox{margin-top:10px;border:2px solid var(--navy)}
 .routebox ol{margin:0;padding-left:22px;display:grid;gap:8px;line-height:1.6;font-size:15px}
 .routebox .hl{background:#FFE58A;color:#111;font-weight:700;padding:1px 3px;border-radius:3px}
@@ -205,7 +207,7 @@ html.locked body{padding-bottom:0}
   <svg viewBox="0 0 100 100" aria-hidden="true"><path fill="#fff" d="M8 58c10-22 34-34 58-30 10 2 18 7 24 14-6-2-12-2-17 0 6 4 9 10 9 16-8-6-18-8-28-6-6 8-16 13-27 12 5-3 8-7 9-12-10 2-20 5-28 6z"/></svg>
   <h1 class="display">창룽 스페이스쉽</h1>
   <p>长隆飞船乐园 · 주하이 헝친</p>
-  <span class="hours">10월 25일 기준 · 운영 10:00 – 18:00</span>
+  <span class="hours"><span class="nw">10월 25일 기준</span> · <span class="nw">운영 10:00–18:00</span></span>
 </header>
 
 <main>
@@ -381,48 +383,55 @@ const SHOWS=[
  {ko:"우주선 로봇 환영식",zh:"飞船机器人欢迎仪式",en:"Spaceship Robot Welcome Ceremony",fl:1,z:"cosmic",loc:"정문 광장 · 正门广场 · Main Entrance Square",t:["10:10"]},
  {ko:"열대우림 극장 〈사랑스러운 동물 파티〉",thea:1,zh:"雨林剧场《萌趣动物派对》",en:"Rainforest Theater 《Winsome Animals Party》",fl:1,z:"rainforest",loc:"열대우림 모험 · 热带雨林馆 · Rainforest Adventure",t:["11:20","14:00","15:40","16:40"]},
  {ko:"스타 극장 〈물의 색〉",thea:1,zh:"星际剧场《水之光秀》",en:"Star Theater 《Water Colours》",fl:1,z:"star",loc:"스타 극장 · 星际剧场 · Star Theater",t:["11:00","13:00","14:00"]},
- {ko:"미소 천사",zh:"光影科普秀江豚《微笑天使》",en:"Smiling Angel",fl:1,z:"yangtze",loc:"양쯔강 상괭이관(상괭이관) · 长江江豚馆 · Yangtze Finless Porpoise Exhibit",t:["10:40","13:00","14:20","15:20"]},
- {ko:"어촌 마을의 즐거운 모임",zh:"江畔渔灯欢乐汇",en:"Fishing Village Happy Gathering",fl:1,z:"yangtze",loc:"양쯔강 상괭이관(상괭이관) · 长江江豚馆 · Yangtze Finless Porpoise Exhibit",t:["10:20","11:15","12:30","15:40","16:30"]},
- {ko:"산호 토크쇼",zh:"珊瑚脱口秀",en:"Coral Talk Show",fl:1,z:"coral",loc:"산호관 · 珊瑚馆 · Coral Exhibit",t:["10:40","11:30","13:40","14:50","15:50"]},
+ {ko:"미소 천사",at:"长江江豚",zh:"光影科普秀江豚《微笑天使》",en:"Smiling Angel",fl:1,z:"yangtze",loc:"양쯔강 상괭이관(상괭이관) · 长江江豚馆 · Yangtze Finless Porpoise Exhibit",t:["10:40","13:00","14:20","15:20"]},
+ {ko:"어촌 마을의 즐거운 모임",zh:"江畔渔灯欢乐汇",en:"Fishing Village Happy Gathering",fl:1,z:"yangtze",loc:"양쯔강 상괭이관(상괭이관) · 长江江豚馆 · Yangtze Finless Porpoise Exhibit",t:["10:20","11:15","12:30","15:40"]},
+ {ko:"산호 토크쇼",at:"珊瑚哔哔互动秀",same:1,zh:"珊瑚脱口秀",en:"Coral Talk Show",fl:1,z:"coral",loc:"산호관 · 珊瑚馆 · Coral Exhibit",t:["10:40","11:30","13:40","14:50","15:50"]},
  {ko:"우주 전사 대결",zh:"星际机甲战士互动秀",en:"Cosmic Warrior Rumble",fl:1,z:"star",loc:"스타 극장 · 星际剧场 · Star Theater",t:["11:10","13:10","14:10","16:30"]},
  {ko:"아프리카 부족 축제",zh:"非洲部落欢歌",en:"African Tribal Celebration",fl:1,z:"manatee",loc:"매너티(바다소) · 海牛 · Manatee",t:["10:30","11:30","13:30","15:00","16:00","17:00"]},
  {ko:"아프리카 기우제",zh:"非洲瀑布求雨传奇",en:"Praying for Rain in Africa Rainfall",fl:1,z:"manatee",loc:"매너티(바다소) · 海牛 · Manatee",t:["11:00","13:00","15:30","16:30"]},
  {ko:"우주선 작은 종",zh:"飞船小铃铛",en:"Spaceship Little Bell",fl:1,z:"manatee",loc:"매너티(바다소) · 海牛 · Manatee",t:["10:30","13:40","14:40","17:00"]},
- {ko:"중국의 꿈 우주선 로봇 그랜드 쇼",zh:"飞船乐园中国梦机器人盛世舞台秀",en:"Dream for China Spaceship Robot Grand Show",fl:1,z:"food",loc:"우주선 푸드 플라자 · 飞船美食广场 · Spaceship Food Plaza",t:["13:30","15:00"]},
- {ko:"챔피언의 순간",zh:"冠军时刻",en:"Champion Moment",fl:1,z:"food",loc:"우주선 푸드 플라자 · 飞船美食广场 · Spaceship Food Plaza",t:["10:00","11:30","12:00","13:00","14:00","15:30","16:00","17:00","18:00"]},
- {ko:"실리콘 복싱 대결",zh:"硅基拳击对决",en:"Silicon-based Boxing Duel",fl:1,z:"food",loc:"우주선 푸드 플라자 · 飞船美食广场 · Spaceship Food Plaza",t:["10:15","12:30","13:10"]},
+ {ko:"중국의 꿈 우주선 로봇 그랜드 쇼",at:"机器人嘉年华",zh:"飞船乐园中国梦机器人盛世舞台秀",en:"Dream for China Spaceship Robot Grand Show",fl:1,z:"food",loc:"우주선 푸드 플라자 · 飞船美食广场 · Spaceship Food Plaza",t:["13:30","15:00"]},
+ {ko:"챔피언의 순간",at:"机器人嘉年华",zh:"冠军时刻",en:"Champion Moment",fl:1,z:"food",loc:"우주선 푸드 플라자 · 飞船美食广场 · Spaceship Food Plaza",t:["10:00","11:30","12:00","13:00","14:00","15:30","16:00","17:00","18:00"]},
+ {ko:"실리콘 복싱 대결",at:"机器人嘉年华",zh:"硅基拳击对决",en:"Silicon-based Boxing Duel",fl:1,z:"food",loc:"우주선 푸드 플라자 · 飞船美食广场 · Spaceship Food Plaza",t:["10:15","12:30","13:10"]},
  {ko:"국제 광대 쇼",zh:"国际小丑乐翻天",en:"International Clown Show",fl:2,z:"ocean",loc:"바다 놀이터(놀이광장) · 深海游乐场 · Ocean Playground",t:["13:20"]},
- {ko:"로봇 미래 밴드",zh:"机器人未来乐队",en:"Robot Future Band",fl:2,z:"orca-stadium",loc:"범고래 광장 · 虎鲸广场 · Orca Square",t:["12:50","15:20"]},
+ {ko:"로봇 미래 밴드",at:"机器人嘉年华",zh:"机器人未来乐队",en:"Robot Future Band",fl:2,z:"orca-stadium",loc:"범고래 광장 · 虎鲸广场 · Orca Square",t:["12:50","15:20"]},
  {ko:"범고래 판타지 퍼레이드",zh:"虎鲸奇幻大巡游",en:"Orca Fantasy Parade",fl:2,z:"ocean",loc:"바다 놀이터(놀이광장) → 범고래 광장 · 深海游乐场 → 虎鲸广场 · Ocean Playground → Orca Square",t:["14:30"]},
  {ko:"범고래 여왕 스펙터클",zh:"虎鲸女王狂欢盛典",en:"Queen Orca Spectacular",fl:2,z:"ocean",loc:"바다 놀이터(놀이광장) · 深海游乐场 · Ocean Playground",t:["17:20"]},
  /* 과학 교육 (공식 시간표 ‘科普教育’) */
- {sci:1,ko:"상괭이 재미있는 해설",zh:"江豚…机器人科普讲解",en:"Yangtze Finless Porpoise Fun Talks",fl:1,z:"yangtze",loc:"江豚主缸",t:["12:00","13:00","15:00","17:00"],chk:true},
- {sci:1,ko:"범고래 재미있는 해설",zh:"鲸生鲸世餐厅讲解",en:"Orca Fun Talks",fl:1,z:"orca",loc:"고래 이야기 레스토랑 · 鲸生鲸世餐厅 · Whale’s Story",t:["13:15"]},
- {sci:1,ko:"상괭이 미스터리 박스",zh:"江豚…",en:"The Finless Porpoise Mystery Box",fl:1,z:"yangtze",loc:"상괭이의 창 · 江豚学堂 · Window to Finless Porpoise",t:["11:30","12:30","14:00","16:00"],chk:true},
+ {sci:1,noZone:1,ko:"상괭이 재미있는 해설",zh:"江豚…机器人科普讲解",en:"Yangtze Finless Porpoise Fun Talks",fl:1,z:"yangtze",loc:"江豚主缸",t:["12:00","13:00","15:00","17:00"],chk:true},
+ {sci:1,at:"鲸生鲸世餐厅",ko:"범고래 재미있는 해설",zh:"鲸生鲸世餐厅讲解",en:"Orca Fun Talks",fl:1,z:"orca",loc:"고래 이야기 레스토랑 · 鲸生鲸世餐厅 · Whale’s Story",t:["13:15"]},
+ {sci:1,ko:"상괭이 미스터리 박스",zh:"江豚…",en:"The Finless Porpoise Mystery Box",fl:1,z:"yangtze",loc:"상괭이 학당 · 江豚学堂 · Window to Finless Porpoise",t:["11:30","12:30","14:00","16:00"],chk:true},
  {sci:1,ko:"피피의 음파 모험",zh:"江豚皮皮的声波奇遇",en:"PiPi’s Sonic Adventure",fl:1,z:"yangtze",loc:"양쯔강 상괭이 지킴이 캠프 · 长江江豚守护营 · Yangtze Finless Porpoise Guardian Camp",t:["11:00","13:30","16:30"]},
  {sci:1,ko:"매너티(바다소) 토크쇼",zh:"海牛脱口秀",en:"Manatee Talk Show",fl:1,z:"manatee",loc:"꼬마 매너티 보호자 · 海牛学堂 · Manatee Little Conservator",t:["11:00","12:30","15:00","16:00"]},
  {sci:1,ko:"슈퍼 매너티 변신",zh:"超级海牛变变变",en:"Super Manatee Transform",fl:1,z:"manatee",loc:"매너티 탐험 · 海牛探索营 · Manatee Discovery",t:["11:30","14:00","16:30"],chk:true},
- {sci:1,ko:"산호 보물찾기",zh:"珊瑚寻宝",en:"Coral Treasure Hunt",fl:1,z:"coral",loc:"산호 학교 · 珊瑚学堂 · Coral College",t:["12:00","13:30","15:00"]},
- {sci:1,ko:"겁쟁이의 이빨은 어디에?",zh:"鲨鱼大胆仔找牙齿",en:"Where Is Scaredy’s Tooth?",fl:1,z:"shark",loc:"鲨鱼学堂",t:["13:40","16:20"],chk:true}
+ {sci:1,ko:"산호 보물찾기",zh:"珊瑚寻宝",en:"Coral Treasure Hunt",fl:1,z:"coral",loc:"산호 학당 · 珊瑚学堂 · Coral College",t:["12:00","13:30","15:00"]},
+ {sci:1,ko:"용감이의 이빨은 어디에?",zh:"鲨鱼大胆仔找牙齿",en:"Where Is Scaredy’s Tooth?",fl:1,z:"shark",loc:"鲨鱼学堂",t:["13:40","16:20"],chk:true}
 ];
-SHOWS.forEach(s=>{s.star=["인어 판타지","범고래 디스커버리 쇼"].includes(s.ko)});
+const MUST=["범고래 디스커버리 쇼","인어 판타지","범고래의 약속"];
+SHOWS.forEach(s=>{s.star=MUST.includes(s.ko)});
+const TALK=["상괭이 재미있는 해설","범고래 재미있는 해설"];
+SHOWS.forEach(s=>{s.kind=s.thea?"thea":s.sci?(TALK.includes(s.ko)?"talk":"exp"):"event"});
+const KIND={thea:"🎭 극장 공연",event:"관람객 참여형 소규모 이벤트",talk:"해설",exp:"체험"};
+const kindBadge=k=>`<span class="badge kind">${KIND[k]}</span>`;
 const EN=Object.fromEntries(SHOWS.map(s=>[s.ko,s.en]));
 /* 지도 그림에 이름이 있는 시설 */
 const MAPONLY={
- ocean:[["우주선 레스토랑","飞船餐厅","Space Ship Restaurant"],["익스트림 레이서","极限飞车","Extreme Racer"],["작은 우주 정거장","小小太空站","Little Space Station"],["로봇 카니발","机器人嘉年华","Robot Carnival"]],
- "orca-stadium":[["탐험가 레스토랑","探险家餐厅","Explorer Restaurant"],["고래 상점","虎鲸商店","Whale Store"],["마법 운전 학교","神奇驾校","Magic Driving Academy"],["범고래 광장","虎鲸广场","Orca Square"]],
- whale:[["부족 시장 (상점)","部落市集","Clan Market"]]
+ "orca-stadium":[["익스플로러 레스토랑","探险家餐厅","Explorer Restaurant"],["고래 상점","虎鲸商店","Whale Store"],["마법 운전 학원","神奇驾校","Magic Driving Academy"]]
 };
-const TOURS={cosmic:"宇宙世界 机器人导览讲解",whale:"鲸奇世界 机器人导览讲解",coral:"珊瑚馆 机器人导览讲解",shark:"鲨鱼馆 机器人导览讲解",yangtze:"江豚馆 机器人导览讲解"};
+const TOURS={};
 const H={ride:"놀이기구 (游乐设施 · Amusement Rides)",rest:"식당 (餐厅 · Restaurant)",shop:"상점 (商店 · Shop)",ani:"동물 관람 (动物观赏 · Animal Viewing)",thea:"극장 공연 (剧场演艺 · Theater Performance)",sci:"과학 교육 (科普教育 · Science Education)"};
 
 /* 모든 구역: 지도 안내판 순서대로 */
 const ZONES=[
- {id:"ocean",desc:"버뮤다 폭풍, 심해 잠수함을 비롯한 놀이기구가 모인 놀이광장입니다. 이용 가능 연령은 기구마다 현장 기준을 따릅니다.",dsrc:"",fl:2,ko:"바다 놀이터(놀이광장)",zh:"深海游乐场",en:"Ocean Playground",
+ {id:"ocean",desc:"버뮤다 폭풍, 심해 잠수함을 비롯한 놀이기구가 모인 놀이광장입니다.",dsrc:"",fl:2,ko:"바다 놀이터(놀이광장)",zh:"深海游乐场",en:"Ocean Playground",
   groups:[
-   {h:H.ride,items:[["버뮤다 폭풍 ★","百慕大历险","Bermuda Storm","한 번에 약 300명이 함께 타는 대형 모션 시뮬레이터로, 불이 꺼지면 폭풍 속 바다 모험 영상에 맞춰 좌석 전체가 움직입니다. 탑승 플랫폼(304석)과 곡면 스크린(1,682㎡)이 세계 최대로 기네스 기록에 올랐습니다.","기네스 내용: EAP Magazin(2023)"],["심해 잠수함 ★","深海潜艇","Abyss Submarine","중국 최초의 실제 수중 잠수함 놀이기구입니다. ‘펀더우저호’를 닮은 잠수함 8대가 물에 반쯤 잠겨 나아가고, 창밖으로 상어·노랑가오리 등 바닷물고기와 난파선·화산 장면이 보입니다(한 번에 96명).",""],["수정궁 회전목마","水晶宫转马","Crystal Palace Carousel","위·아래 2층으로 도는 회전목마로, 해마·범고래·상어·문어·수달 등 바다동물 모양 좌석 72개와 마차 4대가 있습니다.",""],["회전 만타가오리","旋转魔鬼鱼","Rotary Manta Ray","만타가오리를 따라 좌석이 위아래로 물결치듯 움직이며 회전하는 기구입니다.",""],["해파리 성","水母城堡","Jellyfish Castle","해파리 모양의 어린이 놀이 구조물로, 높이가 다른 탑 4개·미끄럼틀 4개·연결 다리 3개로 되어 있습니다. 미끄럼틀은 미끄럼 방지 양말이 필요하며 직접 가져가거나 현장에서 살 수 있다는 이용 후기가 있습니다.","양말 내용: 新浪 이용 후기(2026)"],["문어 해적","章鱼海盗船","Octopus Pirate","배가 앞뒤로 점점 크게 흔들리는 해적선 기구로, 파도 위를 오르내리는 느낌을 줍니다.",""],["동물 범퍼카","欢乐碰碰碰","Bumper Beasties","귀여운 바다동물 모양 차를 타고 서로 부딪히며 노는 범퍼카입니다.",""],["바다 기둥","海洋升降塔","The Ocean Pole","빠르게 올라갔다 떨어지며 순간적인 무중력감을 느끼는 낙하형 기구입니다.",""],["광란의 레이서","疯狂车手","Frenzy Racer","아이가 직접 운전하며 친구들과 쫓고 부딪히는 범퍼카입니다.",""],["신나는 점프 타워","童趣蹦跳塔","Fancy Jumping Tower","6.4m 구간을 오르내리며 개구리 등에 탄 듯 통통 튀는 느낌을 주는 기구입니다.",""],["바다 모노레일","海洋单轨车","Ocean Monorail","범고래·고래상어·상어 모양 칸 9개가 놀이광장 위를 한 바퀴 도는 모노레일로, 놀이광장 전체를 내려다볼 수 있습니다.",""],["날치 회전 놀이","极速飞鱼","Flying Fish Go-Round","회전하면서 탑승자가 버튼으로 높이를 직접 올리고 내리는 비행기형 기구입니다.",""],["등대 호퍼","魔幻光轮","The Lighthouse Hopper","오토바이 모양 좌석을 타고 곡선 레일을 좌우로 미끄러지며 회전하는 기구입니다.",""],["영웅 전함","勇者战船","Hero Warship","큰 회전판이 도는 동시에 각 좌석도 스스로 도는 회전 기구입니다.",""],["잠수함 보물찾기","潜艇寻宝","Submarine Treasure Hunt","잠수함 모양 놀이터에 그물 오르기·장애물·미끄럼틀이 합쳐진 어린이 놀이 시설입니다.",""],["바다 놀이","缤纷海洋","Ocean Fun","소라게·소라 모양 나무 놀이집을 출렁이는 그물로 연결한 어린이 놀이터입니다.",""]]},
-   {h:H.rest,items:[["중력 국숫집","引力面馆","Gravity Noodle House"],["쿠브 핫도그","酷比热狗","Kube’s Hot Dog"]]},
-   {h:H.shop,items:[["잠수함 부두","潜艇码头","Submarine Wharf"],["탐험가","探险者","Explorer"],["환상의 조개","奇幻小贝","Fantastic Shell"]]}]},
+   {h:H.ride,items:[["버뮤다 폭풍 ★","百慕大历险","Bermuda Storm","한 번에 약 300명이 함께 타는 대형 모션 시뮬레이터로, 불이 꺼지면 폭풍 속 바다 모험 영상에 맞춰 좌석 전체가 움직입니다. 탑승 플랫폼(304석)과 곡면 스크린(1,682㎡)이 세계 최대로 기네스 기록에 올랐습니다.","기네스 내용: EAP Magazin(2023)"],["심해 잠수함 ★","深海潜艇","Abyss Submarine","중국 최초의 실제 수중 잠수함 놀이기구입니다. ‘펀더우저호’를 닮은 잠수함 8대가 물에 반쯤 잠겨 나아가고, 창밖으로 상어·노랑가오리 등 바닷물고기와 난파선·화산 장면이 보입니다(한 번에 96명).",""],["수정궁 회전목마","水晶宫转马","Crystal Palace Carousel","위·아래 2층으로 도는 회전목마로, 해마·범고래·상어·문어·수달 등 바다동물 모양 좌석 72개와 마차 4대가 있습니다.",""],["회전 만타가오리","旋转魔鬼鱼","Rotary Manta Ray","만타가오리를 따라 좌석이 위아래로 물결치듯 움직이며 회전하는 기구입니다.",""],["해파리 성","水母城堡","Jellyfish Castle","해파리 모양의 어린이 놀이 구조물로, 높이가 다른 탑 4개·미끄럼틀 4개·연결 다리 3개로 되어 있습니다. 미끄럼틀은 미끄럼 방지 양말이 필요하며 직접 가져가거나 현장에서 살 수 있다는 이용 후기가 있습니다.","양말 내용: 新浪 이용 후기(2026)"],["문어 해적","章鱼海盗船","Octopus Pirate","배가 앞뒤로 점점 크게 흔들리는 해적선 기구로, 파도 위를 오르내리는 느낌을 줍니다.",""],["동물 범퍼카","欢乐碰碰碰","Bumper Beasties","귀여운 바다동물 모양 차를 타고 서로 부딪히며 노는 범퍼카입니다.",""],["바다 기둥","海洋升降塔","The Ocean Pole","빠르게 올라갔다 떨어지며 순간적인 무중력감을 느끼는 낙하형 기구입니다.",""],["광란의 레이서","疯狂车手","Frenzy Racer","아이가 직접 운전하며 친구들과 쫓고 부딪히는 범퍼카입니다.",""],["신나는 점프 타워","童趣蹦跳塔","Fancy Jumping Tower","6.4m 구간을 오르내리며 개구리 등에 탄 듯 통통 튀는 느낌을 주는 기구입니다.",""],["바다 모노레일","海洋单轨车","Ocean Monorail","범고래·고래상어·상어 모양 칸 9개가 놀이광장 위를 한 바퀴 도는 모노레일로, 놀이광장 전체를 내려다볼 수 있습니다.",""],["날치 회전 놀이","极速飞鱼","Flying Fish Go-Round","회전하면서 탑승자가 버튼으로 높이를 직접 올리고 내리는 비행기형 기구입니다.",""],["등대 호퍼","魔幻光轮","The Lighthouse Hopper","오토바이 모양 좌석을 타고 곡선 레일을 좌우로 미끄러지며 회전하는 기구입니다.",""],["영웅 전함","勇者战船","Hero Warship","큰 회전판이 도는 동시에 각 좌석도 스스로 도는 회전 기구입니다.",""],["잠수함 보물찾기","潜艇寻宝","Submarine Treasure Hunt","잠수함 모양 놀이터에 그물 오르기·장애물·미끄럼틀이 합쳐진 어린이 놀이 시설입니다.",""],["바다 놀이","缤纷海洋","Ocean Fun","소라게·소라 모양 나무 놀이집을 출렁이는 그물로 연결한 어린이 놀이터입니다.",""],["익스트림 레이서","极限飞车","Extreme Racer","바다 놀이터 오른쪽, 로봇 거리 건너편에 있는 경주 트랙 형태의 놀이기구입니다.",""]]},
+   {h:H.rest,items:[["그래비티 누들 하우스","引力面馆","Gravity Noodle House"],["쿠브 핫도그","酷比热狗","Kube’s Hot Dog"]]},
+   {h:H.shop,items:[["잠수함 부두","潜艇码头","Submarine Wharf"],["익스플로러","探险者","Explorer"],["판타스틱 쉘","奇幻小贝","Fantastic Shell"]]}]},
+ {id:"orca-square",fl:2,ko:"범고래 광장",zh:"虎鲸广场",en:"Orca Square",
+  groups:[
+   {h:H.rest,items:[["우주선 레스토랑","飞船餐厅","Space Ship Restaurant"]]},
+   {h:"기타",items:[["작은 우주 정거장","小小太空站","Little Space Station"],["로봇 카니발","机器人嘉年华","Robot Carnival"]]}]},
  {id:"orca-stadium",desc:"약 4,700명이 동시에 볼 수 있는 범고래 공연장입니다. 세계에서 가장 큰 실내 파도(최대 약 3.2m)를 만드는 범고래 수조가 있습니다.",dsrc:"파도 내용: amusementlogic(2024)",fl:2,ko:"범고래 스타디움(범고래 쇼)",zh:"虎鲸科普剧场",en:"Orca Stadium",
   groups:[
    {h:"기타",items:[["로봇 카니발","机器人嘉年华","Robot Carnival · 로봇 위치는 운영에 따라 바뀔 수 있음 (지도 표기)"]]},
@@ -432,50 +441,50 @@ const ZONES=[
    {h:H.ride,items:[["은하 여행 ★","星际穿梭","Intergalactic Voyage"],["성운 회전","星云转盘","Nebula Spin"],["성간 모험","星际探险","Interstellar Adventure"],["수성 구조 작전","水星救援","Mercury Rescue Mission"],["은하 회전","旋转星河","Galaxy Twirl"]]},
    {h:H.rest,items:[["함장 레스토랑","舰长餐厅","The Captain Restaurant"],["로켓 발사 치킨","火箭发动鸡","Rocket Launch Chicken"],["철 행성 키친","铁板星厨","Iron Planet Kitchen"]]},
    {h:H.shop,items:[["함장 지휘실","舰长指挥室商店","Captain’s Command Room"]]}]},
- {id:"cosmic",desc:"우주 수호대가 우주선을 타고 지구에 도착한다는 설정의 입구 구역으로, 운석대·블랙홀·성운 장면을 지나갑니다.",dsrc:"",fl:1,ko:"우주 세계",zh:"宇宙世界",en:"Cosmic World",
+ {id:"cosmic",noTimes:true,desc:"우주 및 SF(공상과학) 콘셉트를 바탕으로 조성된 실내 구역입니다. 해당 구역 내에는 놀이시설(어트랙션), 개장 기념식 및 행사 공간, 그리고 관련 상점과 식음료 매장 등이 배치되어 있습니다.",dsrc:"",fl:1,ko:"우주 세계",zh:"宇宙世界",en:"Cosmic World",
   groups:[
-   {h:H.ride,items:[["우주선 이야기 ★","飞船总动员","Spaceship’s Story","오르막·급강하 같은 체감 효과가 들어간 5D 시공간 여행 놀이기구입니다.","央广网(cnr.cn, 2024)"]]},
-   {h:"정문 광장 (正门广场 · Main Entrance Square)",items:[["개장식","开园仪式","Opening Ceremony"],["아이스크림 스테이션","雪糕站","Ice Cream Station"],["커피","蓝星咖啡","Coffee"],["부두 상점","航行商店","Wharf Shop"],["우주선 상점","飞船商店","Spaceship Shop"]]}]},
- {id:"food",fl:1,ko:"우주선 푸드 플라자",zh:"飞船美食广场",en:"Spaceship Food Plaza",
-  groups:[
-   {h:"기타",items:[["로봇 카니발","机器人嘉年华","Robot Carnival"]]},
-   {h:H.ride,items:[["은하 폭풍","星河风暴","Galaxy Storm","우주를 누비며 ‘성간 방위 임무’를 수행하는 콘셉트의 놀이기구로 소개됩니다.","珠海本地宝(2025)"]]},
-   {h:H.rest,items:[["산호 레스토랑","珊瑚餐厅","Coral Restaurant"],["푸드코트","快食荟","Food Court"],["음식 거리","食集","Food Street"]]}]},
- {id:"coral",desc:"조간대를 지나 들어가는 산호 전시관으로, 살아 있는 산호 전시로는 세계 최대 규모입니다(기네스 기록, 전용 수조 10개).",dsrc:"기네스 내용: EAP Magazin(2023)",fl:1,ko:"산호관",zh:"珊瑚馆",en:"Coral Exhibit",star:true,
-  groups:[
-   {h:H.thea,items:[["산호 토크쇼","珊瑚哔哔互动秀","Coral Talk Show","‘산호 장로’와 ‘산호 요정’ 움직이는 조형물이 정해진 프로그램대로 공연하고, 꼬마 산호 배우들이 관객 사이를 돌며 함께 노래·춤을 추는 산호 보호 이야기 공연입니다.",""]]},
-   {h:H.sci,items:[["산호 학교","珊瑚学堂","Coral College"],["꼬마 산호 보호자","珊瑚小小研究员","Coral Little Conservator"],["동물 친구들과 우주선 밤 탐험","夜探飞船动物朋友","Night Exploration Of Spaceship With Animal Friends"]]},
-   {h:H.ani,items:[["사슴뿔 산호","美丽鹿角珊瑚","Staghorn Coral","가지가 사슴뿔처럼 뻗는 사슴뿔산호(Acropora) 무리로, 인도·태평양에서 가장 다양하고 생태적으로 중요한 산호 무리입니다.","학술 논문(bioRxiv, Matz 외)"],["장미 산호","蔷薇珊瑚","Rose Coral"],["헬멧 산호","盔形珊瑚","Helmet Coral","Galaxea 산호로, 남중국해에서 흔한 산호초 형성 산호입니다. 연구에서 사슴뿔산호보다 더위에 강한 종으로 다뤄집니다.","학술 논문(PLoS ONE 2013, bioRxiv 2026)"],["밀레포라 산호","多孔鹿角珊瑚","Millepora Coral","사슴뿔산호 무리에 속하는 Acropora millepora로, 인도·태평양 산호초를 이루는 흔한 산호입니다.","학술 논문(bioRxiv, Matz 외)"],["나무 연산호","直立穗软珊瑚","Tree Soft Coral"],["산호초 물고기","珊瑚鱼","Coral Reef Fish"]]}]},
- {id:"deep",desc:"‘심해 도시 카니발’ 콘셉트의 놀이기구 구역입니다. 체중 제한: 1인 90kg, 1대 300kg 이하.",dsrc:"",fl:1,ko:"심해 모험(심해 대모험)",zh:"深海奇遇",en:"Deep Sea Adventure",
-  groups:[{h:H.ride,items:[["심해 모험(심해 대모험)","深海奇遇","Deep Sea Adventure"]]}]},
- {id:"shark",desc:"귀상어 ‘大胆仔’를 따라 여러 상어의 번식 습성과 사냥 방식을 알아보는 전시관입니다.",dsrc:"",fl:1,ko:"상어관",zh:"鲨鱼馆",en:"Shark Exhibit",star:true,
-  groups:[
-   {h:H.ani,items:[["홍살귀상어","路氏双髻鲨","Scalloped Hammerhead","머리 앞쪽이 양옆으로 넓게 튀어나와 망치 모양을 한 귀상어입니다. 상어관 안내 캐릭터 ‘大胆仔’도 귀상어입니다.",""],["물고기 떼","巡游鱼","School of Fish"],["황소상어","公牛鲨","Bull Shark","바다와 강을 오가며 민물에서도 오래 지낼 수 있는 상어로, 강을 따라 수백 km 안쪽까지 들어가기도 합니다.","미국 플로리다 어류야생동물보호위원회(FWC)"],["너스상어","护士鲨","Nurse Shark","바닥에 엎드려 쉬는 모습을 자주 볼 수 있는 상어로, 코 아래에 짧은 수염(바벨)이 있습니다.","플로리다대 EDIS 자료"],["얼룩말상어(표범무늬상어)","豹纹鲨","Leopard Shark","중국어 이름 豹纹鲨는 ‘얼룩말상어(Zebra shark)’를 가리킵니다. 새끼 때는 줄무늬, 다 크면 연한 몸에 검은 점무늬가 있고 주로 밤에 바닥에서 먹이를 찾는 순한 상어입니다.","위키백과 ‘Zebra shark’ 외"],["레몬상어","柠檬鲨","Lemon Shark","등이 노르스름한 갈색이라 ‘레몬상어’라 불리며, 무리 지어 다니는 경우가 많습니다.","Merriam-Webster 사전"]]},
-   {h:H.sci,items:[["상어 대모험","鲨鱼冒险营","Shark Escapade"],["상어 탐험 여행","鲨鱼探索之旅","Shark Exploration Journey"]]}]},
- {id:"whale",desc:"매달린 좌석으로 타는 ‘고대 바다 AR 항해’와 고래류 표본 전시가 있고, 정해진 시간에 움직이는 조형물 연출이 있습니다.",dsrc:"",fl:1,ko:"고래관(신기한 고래 세계)",zh:"鲸奇世界",en:"Whale Exhibit",
-  groups:[
-   {h:H.ride,items:[["고대 바다 AR 항해 ★","古海幻行","Ancient Seas AR Voyage","천장에 매달린 좌석을 타고 공중에서 고대 바다를 지나가며 고래 무리를 보는 놀이기구로, AR(증강현실)로 주변 바다생물과 상호작용할 수 있습니다.","央广网(cnr.cn, 2024)"]]},
-   {h:"고래류 표본·모형 갤러리 (鲸豚塑化标本及模型 · Cetacean Plastination & Model Gallery)",items:[["향유고래","抹香鲸","Sperm Whale"],["북대서양참고래","北大西洋露脊鲸","North Atlantic Right Whale"],["혹등고래","座头鲸","Humpback Whale"]]}]},
+   {h:H.ride,items:[["우주선 이야기 ★","飞船总动员","Spaceship’s Story","관람객이 우주 탐험선에 탑승한 승무원이 되어 시공간을 넘나드는 우주 비행을 4D 연출로 체험하는 어트랙션입니다.",""]]},
+   {h:"정문 광장 (正门广场 · Main Entrance Square)",items:[["개장식","开园仪式","Opening Ceremony"],["아이스크림 매점","雪糕站","Ice Cream Station"],["커피 매점","蓝星咖啡","Coffee"],["항해 상점","航行商店","Whart Shop"],["우주선 상점","飞船商店","Spaceship Shop"]]}]},
  {id:"orca",desc:"범고래 수조를 볼 수 있는 구역으로, 수조 옆 식당 ‘고래 이야기’에서는 식사하며 범고래를 볼 수 있습니다.",dsrc:"",fl:1,ko:"범고래(범고래 수조 구역)",zh:"虎鲸",en:"Orca",star:true,
   groups:[
-   {h:H.rest,items:[["고래 이야기","鲸生鲸世餐厅","Whale’s Story","범고래 수조가 대형 파노라마 창으로 보이는 식당으로, 식사하면서 헤엄치는 범고래를 볼 수 있습니다.",""]]},
-   {h:H.thea,items:[["범고래의 약속","虎鲸之约","Orca’s Promise","범고래 가족이 물속에서 헤엄치고 구르는 모습을 가까이서 보여 주는 수중 행동 시연으로, 중국 최초라고 소개됩니다.",""]]},
-   {h:H.sci,items:[["범고래 탐험 여행","虎鲸探索之旅","Orca Exploration Journey"]]}]},
- {id:"star",desc:"《水之光》 공연이 열리는 극장입니다.",dsrc:"",fl:1,ko:"스타 극장",zh:"星际剧场",en:"Star Theater",
-  groups:[{h:H.thea,items:[["스타 극장","星际剧场","Star Theater","물 요정과 무용수들이 바닷속 생물, 빛과 물의 관계, 물의 세 가지 상태(얼음·물·수증기)를 보여 주는 공연 《水之光》이 열립니다.",""]]}]},
- {id:"manatee",desc:"매너티(바다소) 전시 구역입니다. 매너티는 폐로 숨을 쉬는 대형 초식성 포유류입니다.",dsrc:"",fl:1,ko:"매너티(바다소)",zh:"海牛",en:"Manatee",star:true,
+   {h:H.rest,items:[["고래 이야기 식당","鲸生鲸世餐厅","Whale’s Story","대형 범고래 수조(수중 관람창) 인근에 위치하여, 범고래를 가까이서 바라보며 식사를 즐길 수 있는 테마 레스토랑입니다.",""]]},
+   {h:H.thea,items:[["범고래의 약속","虎鲸之约","Orca’s Promise","범고래의 생태와 행동 특성을 관람하고 관련 연출을 감상할 수 있는 극장 공연 프로그램입니다.",""]]},
+   {h:H.sci,items:[["범고래 탐험 여행","虎鲸探索之旅","Orca Exploration Journey","범고래의 생태, 서식 환경, 보호 중요성 등에 대해 배우고 체험할 수 있는 과학 교육 프로그램 및 탐험 코스입니다.",""]]}]},
+ {id:"whale",desc:"매달린 좌석으로 타는 ‘고대 바다 AR 항해’와 고래류 표본 전시가 있고, 정해진 시간에 움직이는 조형물 연출이 있습니다.",dsrc:"",fl:1,ko:"고래관(신기한 고래 세계)",zh:"鲸奇世界",en:"Whale Exhibit",
   groups:[
-   {h:H.thea,items:[["우주선 작은 종","飞船小铃铛","Spaceship Little Bell"]]},
-   {h:H.sci,items:[["꼬마 매너티 보호자","海牛学堂","Manatee Little Conservator"],["매너티 탐험","海牛探索营","Manatee Discovery"]]}]},
+   {h:H.ride,items:[["고대 바다 AR 항해 ★","古海幻行","Ancient Seas AR Voyage","고대 해양 환경을 배경으로 AR(증강현실) 기술을 활용하여 가상의 바다를 항해하며 탐험하는 탑승형 또는 체험형 어트랙션입니다.",""]]},
+   {h:"고래류 표본·모형 갤러리 (鲸豚塑化标本及模型 · Cetacean Plastination & Model Gallery)",items:[["향유고래","抹香鲸","Sperm Whale"],["북대서양참고래","北大西洋露脊鲸","North Atlantic Right Whale"],["혹등고래","座头鲸","Humpback Whale"]]}]},
+ {id:"yangtze",desc:"양쯔강 상괭이 8마리와 바이칼물범, 여러 토종 민물고기가 사는 전시관입니다.",dsrc:"",fl:1,ko:"양쯔강 상괭이관(상괭이관)",zh:"长江江豚馆",en:"Yangtze Finless Porpoise Exhibit",star:true,
+  groups:[
+   {h:H.ani,items:[["양쯔강 상괭이","长江江豚","Yangtze Finless Porpoise","중국 국가 1급 보호동물이자 멸종위기종으로, ‘미소 짓는 천사’라 불리는 8마리의 양쯔강 토종 돌고래의 헤엄치는 모습을 관람할 수 있습니다.",""],["바이칼물범","贝加尔海豹","Baikal Seal","세계에서 가장 작은 물범 무리 중 하나이자, 유일하게 민물에서만 사는 물범입니다.",""],["중국 4대 잉어","四大家鱼","Four Major Chinese Carps","중국에서 예로부터 길러 온 대표 민물고기 4종(청어·초어·백련어·대두어)으로, 양쯔강에 사는 물고기입니다.",""],["황금 아로와나","金龙鱼","Golden Arowana","금빛 비늘이 특징인 관상어로, 중국에서는 ‘금룡어’라 부르며 행운을 상징하는 물고기로 여깁니다.",""],["나비 비단잉어","蝴蝶鲤","Butterfly Koi","지느러미가 나비 날개처럼 길게 늘어진 관상용 비단잉어입니다.",""],["짱뚱어","弹涂鱼","Mudskipper","갯벌에 사는 물고기로, 가슴지느러미로 기어 다니고 물 밖에서도 한동안 지낼 수 있습니다.",""]]},
+   {h:H.thea,items:[["어촌 마을의 즐거운 모임","江畔渔灯欢乐汇","Fishing Village Happy Gathering"]]},
+   {h:H.sci,items:[["양쯔강 상괭이 지킴이 캠프","长江江豚守护营","Yangtze Finless Porpoise Guardian Camp"],["상괭이 학당","江豚学堂","Window to Finless Porpoise"]]}]},
  {id:"rainforest",desc:"열대우림의 낮과 밤을 실제처럼 재현한 전시관으로, 비바람·홍수 장면을 지나 ‘생명의 나무’까지 올라갑니다.",dsrc:"",fl:1,ko:"열대우림 모험",zh:"热带雨林馆",en:"Rainforest Adventure",
   groups:[
    {h:H.ani,items:[["은색 아로와나","银龙鱼","Silver Arowana"],["자이언트 구라미","招财鱼","Giant Gourami"],["연필고기","铅笔鱼","Pencilfish"],["마코앵무새","金刚鹦鹉","Macaw"],["오리부리 메기","鸭嘴鱼","Duckbill Catfish"],["다람쥐원숭이","松鼠猴","Squirrel Monkey"],["거미원숭이","红面蛛猴","Spider Monkey"]]},
    {h:H.thea,items:[["열대우림 극장","雨林剧场","Rainforest Theater","아마존 환경을 꾸민 극장에서 똑똑한 수달 ‘루카’와 친구들이 아마존 이야기를 들려주는 동물 공연(萌趣动物派对)이 열립니다.",""]]}]},
- {id:"yangtze",desc:"양쯔강 상괭이 8마리와 바이칼물범, 여러 토종 민물고기가 사는 전시관입니다.",dsrc:"",fl:1,ko:"양쯔강 상괭이관(상괭이관)",zh:"长江江豚馆",en:"Yangtze Finless Porpoise Exhibit",star:true,
+ {id:"manatee",desc:"매너티(바다소) 전시 구역입니다. 매너티는 폐로 숨을 쉬는 대형 초식성 포유류입니다.",dsrc:"",fl:1,ko:"매너티(바다소)",zh:"海牛",en:"Manatee",star:true,
   groups:[
-   {h:H.ani,items:[["양쯔강 상괭이","长江江豚","Yangtze Finless Porpoise","‘미소 천사’라 불리는 양쯔강 토종 돌고래로, 이 전시관에 8마리가 살고 있습니다.",""],["바이칼물범","贝加尔海豹","Baikal Seal","세계에서 가장 작은 물범 무리 중 하나이자, 유일하게 민물에서만 사는 물범입니다.",""],["중국 4대 잉어","四大家鱼","Four Major Chinese Carps"],["황금 아로와나","金龙鱼","Golden Arowana"],["나비 비단잉어","蝴蝶鲤","Butterfly Koi"],["짱뚱어","弹涂鱼","Mudskipper"]]},
-   {h:H.thea,items:[["어촌 마을의 즐거운 모임","江畔渔灯欢乐汇","Fishing Village Happy Gathering"]]},
-   {h:H.sci,items:[["양쯔강 상괭이 지킴이 캠프","长江江豚守护营","Yangtze Finless Porpoise Guardian Camp"],["상괭이의 창","江豚学堂","Window to Finless Porpoise"],["물범 탐험 여행","海豹探索之旅","Seal Exploration Journey"]]}]}
+   {h:H.thea,items:[["우주선 작은 종","飞船小铃铛","Spaceship Little Bell"],["인어 판타지","美人鱼梦幻秀","Mermaid Fantasy","인어가 등장하는 판타지 콘셉트의 관람객 참여형 소규모 공연입니다.",""],["아프리카 부족 축제","非洲部落欢歌","African Tribal Celebration","아프리카 부족의 노래와 축제를 콘셉트로 한 관람객 참여형 소규모 공연입니다.",""],["아프리카 기우제","非洲瀑布求雨传奇","Praying for Rain in Africa Rainfall","아프리카 폭포에서 비를 비는 전설을 콘셉트로 한 관람객 참여형 소규모 공연입니다.",""]]},
+   {h:H.sci,items:[["꼬마 매너티 보호자","海牛学堂","Manatee Little Conservator"],["매너티 탐험","海牛探索营","Manatee Discovery"]]}]},
+ {id:"shark",desc:"귀상어 ‘용감이’를 따라 여러 상어의 번식 습성과 사냥 방식을 알아보는 전시관입니다.",dsrc:"",fl:1,ko:"상어관",zh:"鲨鱼馆",en:"Shark Exhibit",star:true,
+  groups:[
+   {h:H.ani,items:[["홍살귀상어","路氏双髻鲨","Scalloped Hammerhead","머리 앞쪽이 양옆으로 넓게 튀어나와 망치 모양을 한 귀상어입니다. 상어관 안내 캐릭터 ‘용감이’도 귀상어입니다.",""],["물고기 떼","巡游鱼","School of Fish"],["황소상어","公牛鲨","Bull Shark","바다와 강을 오가며 민물에서도 오래 지낼 수 있는 상어로, 강을 따라 수백 km 안쪽까지 들어가기도 합니다.","미국 플로리다 어류야생동물보호위원회(FWC)"],["너스상어","护士鲨","Nurse Shark","바닥에 엎드려 쉬는 모습을 자주 볼 수 있는 상어로, 코 아래에 짧은 수염(바벨)이 있습니다.","플로리다대 EDIS 자료"],["얼룩말상어(표범무늬상어)","豹纹鲨","Leopard Shark","중국어 이름 豹纹鲨는 ‘얼룩말상어(Zebra shark)’를 가리킵니다. 새끼 때는 줄무늬, 다 크면 연한 몸에 검은 점무늬가 있고 주로 밤에 바닥에서 먹이를 찾는 순한 상어입니다.","위키백과 ‘Zebra shark’ 외"],["레몬상어","柠檬鲨","Lemon Shark","등이 노르스름한 갈색이라 ‘레몬상어’라 불리며, 무리 지어 다니는 경우가 많습니다.","Merriam-Webster 사전"]]},
+   {h:H.sci,items:[["상어 대모험","鲨鱼冒险营","Shark Escapade"],["상어 탐험 여행","鲨鱼探索之旅","Shark Exploration Journey"]]}]},
+ {id:"deep",desc:"심해를 테마로 한 놀이기구 구역입니다.",dsrc:"",fl:1,ko:"심해 모험(심해 대모험)",zh:"深海奇遇",en:"Deep Sea Adventure",
+  groups:[{h:H.ride,items:[["심해 모험(심해 대모험)","深海奇遇","Deep Sea Adventure"]]}]},
+ {id:"star",desc:"《水之光秀》 공연이 열리는 극장입니다.",dsrc:"",fl:1,ko:"스타 극장",zh:"星际剧场",en:"Star Theater",
+  groups:[{h:H.thea,items:[["스타 극장 〈물의 색〉","星际剧场《水之光秀》","Star Theater 《Water Colours》","빛과 그림자의 신비를 탐구하는 주제 공연 《水之光秀》가 열립니다.",""],["우주 전사 대결","星际机甲战士互动秀","Cosmic Warrior Rumble","우주 기계 전사(메카)가 등장하는 관람객 참여형 소규모 공연입니다.",""]]}]},
+ {id:"coral",desc:"조간대를 지나 들어가는 산호 전시관으로, 살아 있는 산호 전시로는 세계 최대 규모입니다(기네스 기록, 전용 수조 10개).",dsrc:"기네스 내용: EAP Magazin(2023)",fl:1,ko:"산호관",zh:"珊瑚馆",en:"Coral Exhibit",star:true,
+  groups:[
+   {h:H.thea,items:[["산호 토크쇼","珊瑚哔哔互动秀","Coral Talk Show","‘산호 장로’와 ‘산호 요정’ 움직이는 조형물이 정해진 프로그램대로 공연하고, 꼬마 산호 배우들이 관객 사이를 돌며 함께 노래·춤을 추는 산호 보호 이야기 공연입니다.",""]]},
+   {h:H.sci,items:[["산호 학당","珊瑚学堂","Coral College"],["꼬마 산호 보호자","珊瑚小小研究员","Coral Little Conservator"],["동물 친구들과 우주선 밤 탐험","夜探飞船动物朋友","Night Exploration Of Spaceship With Animal Friends"]]},
+   {h:H.ani,items:[["사슴뿔 산호","美丽鹿角珊瑚","Staghorn Coral","가지가 사슴뿔처럼 뻗는 사슴뿔산호(Acropora) 무리로, 인도·태평양에서 가장 다양하고 생태적으로 중요한 산호 무리입니다.","학술 논문(bioRxiv, Matz 외)"],["장미 산호","蔷薇珊瑚","Rose Coral"],["헬멧 산호","盔形珊瑚","Helmet Coral","Galaxea 산호로, 남중국해에서 흔한 산호초 형성 산호입니다. 연구에서 사슴뿔산호보다 더위에 강한 종으로 다뤄집니다.","학술 논문(PLoS ONE 2013, bioRxiv 2026)"],["밀레포라 산호","多孔鹿角珊瑚","Millepora Coral","사슴뿔산호 무리에 속하는 Acropora millepora로, 인도·태평양 산호초를 이루는 흔한 산호입니다.","학술 논문(bioRxiv, Matz 외)"],["나무 연산호","直立穗软珊瑚","Tree Soft Coral"],["산호초 물고기","珊瑚鱼","Coral Reef Fish"]]}]},
+ {id:"food",fl:1,ko:"우주선 푸드 플라자",zh:"飞船美食广场",en:"Spaceship Food Plaza",
+  groups:[
+   {h:"기타",items:[["로봇 카니발","机器人嘉年华","Robot Carnival"]]},
+   {h:H.ride,items:[["은하 폭풍","星河风暴","Galaxy Storm","우주를 누비며 ‘성간 방위 임무’를 수행하는 콘셉트의 놀이기구로 소개됩니다.","珠海本地宝(2025)"]]},
+   {h:H.rest,items:[["산호 레스토랑","珊瑚餐厅","Coral Restaurant"],["푸드코트","快食荟","Food Court"],["음식 거리","食集","Food Street"]]}]}
 ];
 const RIDES=[["버뮤다 폭풍","百慕大历险","Bermuda Storm","2층 바다 놀이터(놀이광장)"],["심해 잠수함","深海潜艇","Abyss Submarine","2층 바다 놀이터(놀이광장)"],["우주선 이야기","飞船总动员","Spaceship’s Story","1층 우주 세계"],["은하 여행","星际穿梭","Intergalactic Voyage","2층 미래 도시"],["고대 바다 AR 항해","古海幻行","Ancient Seas AR Voyage","1층 고래관(신기한 고래 세계)"]];
 const SEE=[["범고래관","虎鲸馆","Orca Exhibit","1층 범고래(범고래 수조 구역)"],["양쯔강 상괭이관","长江江豚馆","Yangtze Finless Porpoise Exhibit","1층 양쯔강 상괭이관(상괭이관)"],["매너티관(바다소관)","海牛馆","Manatee Exhibit","1층 매너티(바다소)"],["상어관","鲨鱼馆","Shark Exhibit","1층 상어관"],["산호관","珊瑚馆","Coral Exhibit","1층 산호관"]];
@@ -498,15 +507,15 @@ function renderNow(){
   const el=document.getElementById("nextList");
   if(!up.length){el.innerHTML='<p class="closed">운영 시간이 끝났습니다. 공연은 매일 10:00부터 시작합니다.</p>';return}
   el.innerHTML=up.map(s=>{const d=s.m-n.min;const inTxt=d<=0?"진행 중":d<60?d+"분 뒤":Math.floor(d/60)+"시간 "+(d%60)+"분 뒤";
-    return `<div class="item"><div><div class="t">${s.time}</div><div class="in">${inTxt}</div></div><div><div class="name">${s.star?"★ ":""}${esc(s.ko)}</div><div class="loc">${s.fl}층 · ${esc(s.loc)}</div></div></div>`}).join("");
+    return `<div class="item"><div><div class="t">${s.time}</div><div class="in">${inTxt}</div></div><div><div class="name">${s.star?"★ ":""}${esc(s.ko)}${kindBadge(s.kind)}</div><div class="loc">${s.fl}층 · ${esc(s.loc)}</div></div></div>`}).join("");
 }
 function renderMust(){
-  document.getElementById("mustList").innerHTML=SHOWS.filter(s=>s.star).map(s=>`<div class="card"><div class="head"><h3>${esc(s.ko)}</h3><span class="floor">${s.fl}층</span></div><div class="zh">${esc(s.zh)}</div>${EN[s.ko]?`<div class="en">${esc(EN[s.ko])}</div>`:""}<div class="where">📍 ${esc(s.loc)}${s.desc?" · "+esc(s.desc):""}</div>${timesHtml(s.t)}${s.warn?`<div class="note warn" style="margin:10px 0 0">⚠️ ${esc(s.warn)}</div>`:""}</div>`).join("");
+  document.getElementById("mustList").innerHTML=MUST.map(k=>SHOWS.find(s=>s.ko===k)).filter(Boolean).map(s=>`<div class="card"><div class="head"><h3>${esc(s.ko)}</h3><span class="floor">${s.fl}층</span></div><div style="margin:2px 0 4px">${kindBadge(s.kind)}</div><div class="zh">${esc(s.zh)}</div>${EN[s.ko]?`<div class="en">${esc(EN[s.ko])}</div>`:""}<div class="where">📍 ${esc(s.loc)}${s.desc?" · "+esc(s.desc):""}</div>${timesHtml(s.t)}${s.warn?`<div class="note warn" style="margin:10px 0 0">⚠️ ${esc(s.warn)}</div>`:""}</div>`).join("");
 }
 
 let filter="all";
 function renderTimeline(){
-  const card=s=>`<div class="show ${s.star?"star":""}" style="margin-bottom:10px"><h3>${s.star?"★ ":""}${esc(s.ko)}${s.star?'<span class="badge">★ 추천</span>':""}${s.thea?'<span class="badge thea">🎭 극장 공연</span>':""}</h3><div class="zh">${esc(s.zh)}${s.chk?' · <b>중국어 이름 일부 판독 불확실</b>':""}</div>${EN[s.ko]?`<div class="en">${esc(EN[s.ko])}</div>`:""}<div class="meta">📍 ${esc(s.loc)}${s.desc?" · "+esc(s.desc):""}</div>${timesHtml(s.t)}${s.warn?`<div class="note warn" style="margin:10px 0 0">⚠️ ${esc(s.warn)}</div>`:""}</div>`;
+  const card=s=>`<div class="show ${s.star?"star":""}" style="margin-bottom:10px"><h3>${s.star?"★ ":""}${esc(s.ko)}${s.star?'<span class="badge">★ 추천</span>':""}${kindBadge(s.kind)}</h3><div class="zh">${esc(s.zh)}${s.chk?' · <b>중국어 이름 일부 판독 불확실</b>':""}</div>${EN[s.ko]?`<div class="en">${esc(EN[s.ko])}</div>`:""}<div class="meta">📍 ${esc(s.loc)}${s.desc?" · "+esc(s.desc):""}</div>${timesHtml(s.t)}${s.warn?`<div class="note warn" style="margin:10px 0 0">⚠️ ${esc(s.warn)}</div>`:""}</div>`;
   const order=(a,b)=>(b.star?1:0)-(a.star?1:0)||toMin(a.t[0])-toMin(b.t[0]);
   const sec=(title,list)=>list.length?`<h3 class="display" style="font-size:20px;color:var(--navy);margin:18px 0 10px">${title}</h3>${list.sort(order).map(card).join("")}`:"";
   document.getElementById("timeline").innerHTML=
@@ -516,16 +525,24 @@ function renderTimeline(){
 }
 let zf="all";
 function renderZones(){
-  const list=ZONES.filter(z=>zf==="all"||String(z.fl)===zf);
+  const list=ZONES.filter(z=>zf==="all"||String(z.fl)===zf).sort((a,b)=>a.fl-b.fl);
   document.getElementById("zoneList").innerHTML=list.map(z=>{
-    const shows=SHOWS.filter(s=>s.z===z.id&&!s.sci), sci=SHOWS.filter(s=>s.z===z.id&&s.sci);
-    const tour=TOURS[z.id];
+    const zs=z.noTimes?[]:SHOWS.filter(s=>s.z===z.id&&!s.noZone), izh=new Set(z.groups.flatMap(g=>g.items.map(i=>i[1])));
+    const atOf=s=>s.at||(s.sci?s.loc.split(" · ").find(p=>izh.has(p)):null);
+    const stHtml=s=>`<div class="st"><b>${esc(s.ko)}</b>${kindBadge(s.kind)} <span class="zh">${esc(s.loc)}</span>${timesHtml(s.t)}</div>`;
+    const itemTimes=zh=>zs.filter(s=>s.zh===zh||atOf(s)===zh).map(s=>(s.zh===zh||s.same)?`<div class="st">${kindBadge(s.kind)} <span class="zh">📍 ${esc(s.loc)}</span>${timesHtml(s.t)}</div>`:stHtml(s)).join("");
+    const placed=s=>izh.has(s.zh)||!!atOf(s);
+    const shows=zs.filter(s=>!s.sci&&!placed(s)), sci=zs.filter(s=>s.sci&&!placed(s));
+    const tour=z.noTimes?null:TOURS[z.id];
+    const hasSci=z.groups.some(g=>g.h===H.sci);
+    const tourLi=tour?`<li><b>${esc(tour)}</b>${kindBadge("talk")}${timesHtml(["10:00–18:00 · 30분마다"])}</li>`:"";
+    const sciExtra=tourLi+sci.map(s=>`<li>${stHtml(s).replace(/^<div class="st">|<\/div>$/g,"")}</li>`).join("");
     return `<details class="zone" id="z-${z.id}"><summary><span class="floor">${z.fl}층</span><span class="zt">${z.star?"★ ":""}${esc(z.ko)}</span><span class="zh">${esc(z.zh)} · ${esc(z.en)}</span></summary>
     <div class="zbody">
     ${z.desc?`<p class="zdesc">${esc(z.desc)}</p>`:""}
-    ${z.groups.map(g=>`<h4>${esc(g.h)}</h4><ul class="il">${g.items.map(i=>`<li><b>${esc(i[0])}</b> <span class="zh">${esc(i[1])}</span><br><span class="sub">${esc(i[2])}</span>${i[3]?`<div class="idesc">${esc(i[3])}</div>`:""}</li>`).join("")}</ul>`).join("")}
-    ${shows.length?`<h4>공연 시간</h4>${shows.map(s=>`<div class="st"><b>${esc(s.ko)}</b> <span class="zh">${esc(s.loc)}</span>${timesHtml(s.t)}</div>`).join("")}`:""}
-    ${(sci.length||tour)?`<h4>과학 교육 시간</h4>${tour?`<div class="st"><b>${esc(tour)}</b>${timesHtml(["10:00–18:00 · 30분마다"])}</div>`:""}${sci.map(s=>`<div class="st"><b>${esc(s.ko)}</b> <span class="zh">${esc(s.loc)}</span>${timesHtml(s.t)}</div>`).join("")}`:""}
+    ${z.groups.map(g=>`<h4>${esc(g.h)}</h4><ul class="il">${g.items.map(i=>`<li><b>${esc(i[0])}</b> <span class="zh">${esc(i[1])}</span><br><span class="sub">${esc(i[2])}</span>${i[3]?`<div class="idesc">${esc(i[3])}</div>`:""}${itemTimes(i[1])}</li>`).join("")}${g.h===H.sci?sciExtra:""}</ul>`).join("")}
+    ${shows.length?`<h4>공연 시간</h4>${shows.map(stHtml).join("")}`:""}
+    ${(!hasSci&&(sci.length||tour))?`<h4>과학 교육 시간</h4>${tour?`<div class="st"><b>${esc(tour)}</b>${kindBadge("talk")}${timesHtml(["10:00–18:00 · 30분마다"])}</div>`:""}${sci.map(stHtml).join("")}`:""}
     ${MAPONLY[z.id]?`<h4>지도에 표시된 다른 시설</h4><ul class="il">${MAPONLY[z.id].map(i=>`<li><b>${esc(i[0])}</b> <span class="zh">${esc(i[1])}</span><br><span class="sub">${esc(i[2])}</span></li>`).join("")}</ul>`:""}</div></details>`}).join("");
 }
 function renderFun(){
