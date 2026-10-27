@@ -132,6 +132,7 @@ h3{margin:0;font-size:17px;line-height:1.35}
 .idesc{margin-top:5px;font-size:14px;line-height:1.5}
 .zdesc .src,.idesc .src{display:block;margin-top:3px;font-size:12px;color:var(--muted)}
 .st{margin:8px 0}
+.hreq{margin-top:5px;font-size:14px;font-weight:700;color:var(--orange-ink)}
 /* Tab bar */
 nav.tabs{position:fixed;left:0;right:0;bottom:0;background:var(--surface);border-top:1px solid var(--line);
   display:grid;grid-template-columns:repeat(6,1fr);padding-bottom:env(safe-area-inset-bottom,0px);z-index:20}
@@ -412,6 +413,8 @@ SHOWS.forEach(s=>{s.star=MUST.includes(s.ko)});
 const TALK=["상괭이 재미있는 해설","범고래 재미있는 해설"];
 SHOWS.forEach(s=>{s.kind=s.thea?"thea":s.sci?(TALK.includes(s.ko)?"talk":"exp"):"event"});
 const KIND={thea:"🎭 극장 공연",event:"관람객 참여형 소규모 이벤트",talk:"해설",exp:"체험"};
+const HEIGHT={"星云转盘": "키 1.3m 이상", "海洋升降塔": "키 1.2m 이상", "魔幻光轮": "키 1.2m 이상", "百慕大历险": "키 1.1m 이상", "水母城堡": "키 1.1m 이상", "潜艇寻宝": "키 1.1m 이상", "旋转魔鬼鱼": "키 1.05m 이상", "疯狂车手": "키 1.05m 이상", "星际探险": "키 1.0m 이상", "星际穿梭": "키 0.9m 이상", "飞船总动员": "키 0.9m 이상", "勇者战船": "키 0.9m 이상", "极速飞鱼": "키 0.9m 이상", "童趣蹦跳塔": "키 0.9m 이상", "星河风暴": "키 0.9m 이상", "海洋单轨车": "키 0.9m 이상", "古海幻行": "키 0.9m 이상", "章鱼海盗船": "키 0.9m 이상", "深海奇遇": "키 0.9m 이상", "小小太空站": "키 0.9m 이상", "欢乐碰碰碰": "키 0.9~1.35m만 이용 가능", "缤纷海洋": "키 0.8m 이상", "神奇驾校": "키 0.8m 이상", "旋转星河": "키 0.8m 이상", "极限飞车": "키 0.8m 이상", "水星救援": "키 0.8m 이상", "水晶宫转马": "키 0.7m 이상", "深海潜艇": "키 0.7m 이상 · 1.3m 이하는 보호자 동반"};
+const hReq=zh=>HEIGHT[zh]?`<div class="hreq">📏 ${HEIGHT[zh]}</div>`:"";
 const kindBadge=k=>`<span class="badge kind">${KIND[k]}</span>`;
 const EN=Object.fromEntries(SHOWS.map(s=>[s.ko,s.en]));
 /* 지도 그림에 이름이 있는 시설 */
@@ -540,13 +543,13 @@ function renderZones(){
     return `<details class="zone" id="z-${z.id}"><summary><span class="floor">${z.fl}층</span><span class="zt">${z.star?"★ ":""}${esc(z.ko)}</span><span class="zh">${esc(z.zh)} · ${esc(z.en)}</span></summary>
     <div class="zbody">
     ${z.desc?`<p class="zdesc">${esc(z.desc)}</p>`:""}
-    ${z.groups.map(g=>`<h4>${esc(g.h)}</h4><ul class="il">${g.items.map(i=>`<li><b>${esc(i[0])}</b> <span class="zh">${esc(i[1])}</span><br><span class="sub">${esc(i[2])}</span>${i[3]?`<div class="idesc">${esc(i[3])}</div>`:""}${itemTimes(i[1])}</li>`).join("")}${g.h===H.sci?sciExtra:""}</ul>`).join("")}
+    ${z.groups.map(g=>`<h4>${esc(g.h)}</h4><ul class="il">${g.items.map(i=>`<li><b>${esc(i[0])}</b> <span class="zh">${esc(i[1])}</span><br><span class="sub">${esc(i[2])}</span>${i[3]?`<div class="idesc">${esc(i[3])}</div>`:""}${hReq(i[1])}${itemTimes(i[1])}</li>`).join("")}${g.h===H.sci?sciExtra:""}</ul>`).join("")}
     ${shows.length?`<h4>공연 시간</h4>${shows.map(stHtml).join("")}`:""}
     ${(!hasSci&&(sci.length||tour))?`<h4>과학 교육 시간</h4>${tour?`<div class="st"><b>${esc(tour)}</b>${kindBadge("talk")}${timesHtml(["10:00–18:00 · 30분마다"])}</div>`:""}${sci.map(stHtml).join("")}`:""}
-    ${MAPONLY[z.id]?`<h4>지도에 표시된 다른 시설</h4><ul class="il">${MAPONLY[z.id].map(i=>`<li><b>${esc(i[0])}</b> <span class="zh">${esc(i[1])}</span><br><span class="sub">${esc(i[2])}</span></li>`).join("")}</ul>`:""}</div></details>`}).join("");
+    ${MAPONLY[z.id]?`<h4>지도에 표시된 다른 시설</h4><ul class="il">${MAPONLY[z.id].map(i=>`<li><b>${esc(i[0])}</b> <span class="zh">${esc(i[1])}</span><br><span class="sub">${esc(i[2])}</span>${hReq(i[1])}</li>`).join("")}</ul>`:""}</div></details>`}).join("");
 }
 function renderFun(){
-  document.getElementById("rideTbl").innerHTML=RIDES.map(r=>`<tr><td><b>${esc(r[0])}</b><div class="zh">${esc(r[1])}</div><div class="en">${esc(r[2])}</div></td><td>${esc(r[3])}</td></tr>`).join("");
+  document.getElementById("rideTbl").innerHTML=RIDES.map(r=>`<tr><td><b>${esc(r[0])}</b><div class="zh">${esc(r[1])}</div><div class="en">${esc(r[2])}</div>${hReq(r[1])}</td><td>${esc(r[3])}</td></tr>`).join("");
   document.getElementById("seeTbl").innerHTML=SEE.map(r=>`<tr><td><b>${esc(r[0])}</b><div class="zh">${esc(r[1])}</div><div class="en">${esc(r[2])}</div></td><td>${esc(r[3])}</td></tr>`).join("");
   document.getElementById("foodList").innerHTML=FOOD.map(f=>`<div class="card"><h3>${esc(f[0])}</h3><div class="where">📍 ${esc(f[1])}</div></div>`).join("");
 }
