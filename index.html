@@ -222,7 +222,7 @@ html.locked body{padding-bottom:0}
   <svg viewBox="0 0 100 100" aria-hidden="true"><path fill="#fff" d="M8 58c10-22 34-34 58-30 10 2 18 7 24 14-6-2-12-2-17 0 6 4 9 10 9 16-8-6-18-8-28-6-6 8-16 13-27 12 5-3 8-7 9-12-10 2-20 5-28 6z"/></svg>
   <h1 class="display">창롱 스페이스쉽</h1>
   <p>长隆飞船乐园 · Chimelong Spaceship · 주하이 헝친</p>
-  <span class="hours"><span class="nw">10월 28일 기준</span> · <span class="nw">운영 10:00–18:00</span></span>
+  <span class="hours"><span class="nw" id="hDate">10월 28일 기준</span> · <span class="nw" id="hOpen">운영 10:00–18:00</span></span>
 </header>
 
 <main>
@@ -273,7 +273,7 @@ html.locked body{padding-bottom:0}
 <!-- SHOWS -->
 <section class="view" id="shows" aria-label="공연 시간표">
   <h2>공연 시간표</h2>
-  <p class="zh" style="margin-top:-6px"><b>10월 28일 공식 시간표 기준</b> · 날짜별로 시간이 달라질 수 있습니다</p>
+  <p class="zh" style="margin-top:-6px"><b id="sDate">10월 28일 공식 시간표 기준</b> · 날짜별로 시간이 달라질 수 있습니다</p>
   <div class="note warn">‘🎭 극장 공연’ 표시가 있는 공연은 시작 5분이 지나면 입장할 수 없습니다.</div>
   <div id="timeline"></div>
   <div class="note">공식 공연 시간표 기준입니다. 현장 사정으로 공연이 바뀌거나 중단될 수 있습니다.</div>
@@ -522,6 +522,17 @@ const FACP={
 };
 const FACNAME={rest:"식당",wc:"화장실",elev:"엘리베이터",esc:"에스컬레이터",stroll:"유모차 서비스",wheel:"휠체어 서비스",smoke:"흡연 구역",aed:"자동심장충격기(AED)",aid:"의무실"};
 const pinBtn=(zid,zh)=>PIN[zid+"|"+zh]?`<div><button type="button" class="mapgo" data-pin="${esc(zid+"|"+zh)}">📍 지도에서 보기</button></div>`:"";
+
+const LABELPIN={main:[1842,2046],orca:[1827,1399],yangtze:[1853,1505],manatee:[1942,1128],shark:[1719,778],coral:[1919,594]};
+const ZLABEL={cosmic:"main",orca:"orca",yangtze:"yangtze",manatee:"manatee",shark:"shark",coral:"coral"};
+const ZPOINT={ocean:[450,979],"orca-square":[899,1379],"orca-stadium":[445,1535],future:[576,1932],cosmic:LABELPIN.main,orca:LABELPIN.orca,whale:[1562,987],yangtze:LABELPIN.yangtze,rainforest:[2120,1259],manatee:LABELPIN.manatee,shark:LABELPIN.shark,deep:[1562,538],star:[2033,681],coral:LABELPIN.coral,food:[1559,432]};
+const zonePts=zid=>ZPOINT[zid]?[ZPOINT[zid]]:[];
+const zonePtsOld=zid=>{const l=Object.keys(PIN).filter(k=>k.startsWith(zid+"|")).map(k=>PIN[k]);if(ZLABEL[zid])l.push(LABELPIN[ZLABEL[zid]]);return l.filter((p,i,a)=>a.findIndex(q=>q[0]===p[0]&&q[1]===p[1])===i)};
+const showPts=s=>{if((s.loc||"").includes("正门广场"))return [LABELPIN.main];for(const k of [s.z+"|"+(s.at||""),s.z+"|"+s.zh,s.z+"|"+s.zh.split("《")[0]])if(PIN[k])return [PIN[k]];return zonePts(s.z)};
+const anyPin=zh=>{const k=Object.keys(PIN).find(k=>k.endsWith("|"+zh));return k?[PIN[k]]:[]};
+const SEEPIN={"虎鲸馆":"orca","长江江豚馆":"yangtze","海牛馆":"manatee","鲨鱼馆":"shark","珊瑚馆":"coral"};
+const foodPts=f=>f.includes("鲸生鲸世餐厅")?[PIN["orca|鲸生鲸世餐厅"]]:f.includes("舰长餐厅")?[PIN["future|舰长餐厅"]]:f.includes("未来之城")?zonePts("future"):[];
+const goBtn=(pts,label,txt)=>pts&&pts.length?`<div><button type="button" class="mapgo" data-pts="${esc(JSON.stringify(pts))}" data-l="${esc(label)}">${txt||"📍 지도에서 보기"}</button></div>`:"";
 const toMin=s=>{const[a,b]=s.split(":").map(Number);return a*60+b};
 function nowMin(){
   const p=new Intl.DateTimeFormat("en-GB",{timeZone:"Asia/Shanghai",hour:"2-digit",minute:"2-digit",hour12:false}).formatToParts(new Date());
@@ -539,15 +550,15 @@ function renderNow(){
   const el=document.getElementById("nextList");
   if(!up.length){el.innerHTML='<p class="closed">운영 시간이 끝났습니다. 공연은 매일 10:00부터 시작합니다.</p>';return}
   el.innerHTML=up.map(s=>{const d=s.m-n.min;const inTxt=d<=0?"진행 중":d<60?d+"분 뒤":Math.floor(d/60)+"시간 "+(d%60)+"분 뒤";
-    return `<div class="item"><div><div class="t">${s.time}</div><div class="in">${inTxt}</div></div><div><div class="name">${s.star?"★ ":""}${esc(s.ko)}${kindBadge(s.kind)}</div><div class="loc">${s.fl}층 · ${esc(s.loc)}</div></div></div>`}).join("");
+    return `<div class="item"><div><div class="t">${s.time}</div><div class="in">${inTxt}</div></div><div><div class="name">${s.star?"★ ":""}${esc(s.ko)}${kindBadge(s.kind)}</div><div class="loc">${s.fl}층 · ${esc(s.loc)}</div>${goBtn(showPts(s),s.ko)}</div></div>`}).join("");
 }
 function renderMust(){
-  document.getElementById("mustList").innerHTML=MUST.map(k=>SHOWS.find(s=>s.ko===k)).filter(Boolean).map(s=>`<div class="card"><div class="head"><h3>${esc(s.ko)}</h3><span class="floor">${s.fl}층</span></div><div style="margin:2px 0 4px">${kindBadge(s.kind)}</div><div class="zh">${esc(s.zh)}</div>${EN[s.ko]?`<div class="en">${esc(EN[s.ko])}</div>`:""}<div class="where">📍 ${esc(s.loc)}${s.desc?" · "+esc(s.desc):""}</div>${timesHtml(s.t)}${s.warn?`<div class="note warn" style="margin:10px 0 0">⚠️ ${esc(s.warn)}</div>`:""}</div>`).join("");
+  document.getElementById("mustList").innerHTML=MUST.map(k=>SHOWS.find(s=>s.ko===k)).filter(Boolean).map(s=>`<div class="card"><div class="head"><h3>${esc(s.ko)}</h3><span class="floor">${s.fl}층</span></div><div style="margin:2px 0 4px">${kindBadge(s.kind)}</div><div class="zh">${esc(s.zh)}</div>${EN[s.ko]?`<div class="en">${esc(EN[s.ko])}</div>`:""}<div class="where">📍 ${esc(s.loc)}${s.desc?" · "+esc(s.desc):""}</div>${timesHtml(s.t)}${goBtn(showPts(s),s.ko)}${s.warn?`<div class="note warn" style="margin:10px 0 0">⚠️ ${esc(s.warn)}</div>`:""}</div>`).join("");
 }
 
 let filter="all";
 function renderTimeline(){
-  const card=s=>`<div class="show ${s.star?"star":""}" style="margin-bottom:10px"><h3>${s.star?"★ ":""}${esc(s.ko)}${s.star?'<span class="badge">★ 추천</span>':""}${kindBadge(s.kind)}</h3><div class="zh">${esc(s.zh)}${s.chk?' · <b>중국어 이름 일부 판독 불확실</b>':""}</div>${EN[s.ko]?`<div class="en">${esc(EN[s.ko])}</div>`:""}<div class="meta">📍 ${esc(s.loc)}${s.desc?" · "+esc(s.desc):""}</div>${timesHtml(s.t)}${s.warn?`<div class="note warn" style="margin:10px 0 0">⚠️ ${esc(s.warn)}</div>`:""}</div>`;
+  const card=s=>`<div class="show ${s.star?"star":""}" style="margin-bottom:10px"><h3>${s.star?"★ ":""}${esc(s.ko)}${s.star?'<span class="badge">★ 추천</span>':""}${kindBadge(s.kind)}</h3><div class="zh">${esc(s.zh)}${s.chk?' · <b>중국어 이름 일부 판독 불확실</b>':""}</div>${EN[s.ko]?`<div class="en">${esc(EN[s.ko])}</div>`:""}<div class="meta">📍 ${esc(s.loc)}${s.desc?" · "+esc(s.desc):""}</div>${timesHtml(s.t)}${goBtn(showPts(s),s.ko)}${s.warn?`<div class="note warn" style="margin:10px 0 0">⚠️ ${esc(s.warn)}</div>`:""}</div>`;
   const order=(a,b)=>(b.star?1:0)-(a.star?1:0)||toMin(a.t[0])-toMin(b.t[0]);
   const sec=(title,list)=>list.length?`<h3 class="display" style="font-size:20px;color:var(--navy);margin:18px 0 10px">${title}</h3>${list.sort(order).map(card).join("")}`:"";
   document.getElementById("timeline").innerHTML=
@@ -568,19 +579,19 @@ function renderZones(){
     const tour=z.noTimes?null:TOURS[z.id];
     const hasSci=z.groups.some(g=>g.h===H.sci);
     const tourLi=tour?`<li><b>${esc(tour)}</b>${kindBadge("talk")}${timesHtml(["10:00–18:00 · 30분마다"])}</li>`:"";
-    const sciExtra=tourLi+sci.map(s=>`<li>${stHtml(s).replace(/^<div class="st">|<\/div>$/g,"")}</li>`).join("");
+    const sciExtra=tourLi+sci.map(s=>`<li>${stHtml(s).replace(/^<div class="st">|<\/div>$/g,"")}${goBtn(showPts(s),s.ko)}</li>`).join("");
     return `<details class="zone" id="z-${z.id}"><summary><span class="floor">${z.fl}층</span><span class="zt">${z.star?"★ ":""}${esc(z.ko)}</span><span class="zh">${esc(z.zh)} · ${esc(z.en)}</span></summary>
     <div class="zbody">
-    ${z.desc?`<p class="zdesc">${esc(z.desc)}</p>`:""}
+    ${goBtn(zonePts(z.id),z.ko,"📍 구역 위치 지도에서 보기")}${z.desc?`<p class="zdesc">${esc(z.desc)}</p>`:""}
     ${z.groups.map(g=>`<h4>${esc(g.h)}</h4><ul class="il">${g.items.map(i=>`<li><b>${esc(i[0])}</b>${aka(i[1])} <span class="zh">${esc(i[1])}</span><br><span class="sub">${esc(i[2])}</span>${i[3]?`<div class="idesc">${esc(i[3])}</div>`:""}${hReq(i[1])}${itemTimes(i[1])}${pinBtn(z.id,i[1])}</li>`).join("")}${g.h===H.sci?sciExtra:""}</ul>`).join("")}
-    ${shows.length?`<h4>공연 시간</h4>${shows.map(stHtml).join("")}`:""}
-    ${(!hasSci&&(sci.length||tour))?`<h4>과학 교육 시간</h4>${tour?`<div class="st"><b>${esc(tour)}</b>${kindBadge("talk")}${timesHtml(["10:00–18:00 · 30분마다"])}</div>`:""}${sci.map(stHtml).join("")}`:""}
+    ${shows.length?`<h4>공연 시간</h4>${shows.map(s=>stHtml(s).replace(/<\/div>$/,goBtn(showPts(s),s.ko)+"</div>")).join("")}`:""}
+    ${(!hasSci&&(sci.length||tour))?`<h4>과학 교육 시간</h4>${tour?`<div class="st"><b>${esc(tour)}</b>${kindBadge("talk")}${timesHtml(["10:00–18:00 · 30분마다"])}</div>`:""}${sci.map(s=>stHtml(s).replace(/<\/div>$/,goBtn(showPts(s),s.ko)+"</div>")).join("")}`:""}
     ${MAPONLY[z.id]?`<h4>지도에 표시된 다른 시설</h4><ul class="il">${MAPONLY[z.id].map(i=>`<li><b>${esc(i[0])}</b>${aka(i[1])} <span class="zh">${esc(i[1])}</span><br><span class="sub">${esc(i[2])}</span>${hReq(i[1])}${pinBtn(z.id,i[1])}</li>`).join("")}</ul>`:""}</div></details>`}).join("");
 }
 function renderFun(){
-  document.getElementById("rideTbl").innerHTML=RIDES.map(r=>`<tr><td><b>${esc(r[0])}</b>${aka(r[1])}<div class="zh">${esc(r[1])}</div><div class="en">${esc(r[2])}</div>${hReq(r[1])}</td><td>${esc(r[3])}</td></tr>`).join("");
-  document.getElementById("seeTbl").innerHTML=SEE.map(r=>`<tr><td><b>${esc(r[0])}</b>${aka(r[1])}<div class="zh">${esc(r[1])}</div><div class="en">${esc(r[2])}</div></td><td>${esc(r[3])}</td></tr>`).join("");
-  document.getElementById("foodList").innerHTML=FOOD.map(f=>`<div class="card"><h3>${esc(f[0])}</h3><div class="where">📍 ${esc(f[1])}</div></div>`).join("");
+  document.getElementById("rideTbl").innerHTML=RIDES.map(r=>`<tr><td><b>${esc(r[0])}</b>${aka(r[1])}<div class="zh">${esc(r[1])}</div><div class="en">${esc(r[2])}</div>${hReq(r[1])}${goBtn(anyPin(r[1]),r[0])}</td><td>${esc(r[3])}</td></tr>`).join("");
+  document.getElementById("seeTbl").innerHTML=SEE.map(r=>`<tr><td><b>${esc(r[0])}</b>${aka(r[1])}<div class="zh">${esc(r[1])}</div><div class="en">${esc(r[2])}</div>${goBtn(SEEPIN[r[1]]?[LABELPIN[SEEPIN[r[1]]]]:[],r[0])}</td><td>${esc(r[3])}</td></tr>`).join("");
+  document.getElementById("foodList").innerHTML=FOOD.map(f=>`<div class="card"><h3>${esc(f[0])}</h3><div class="where">📍 ${esc(f[1])}</div>${goBtn(foodPts(f[1]),f[0])}</div>`).join("");
 }
 const VIEWS=["now","shows","map","zones","fun","fac"];
 function show(v){
@@ -633,6 +644,7 @@ document.addEventListener("keydown",e=>{if(e.key==="Escape")closeAsk()});
   document.getElementById("mapFull").addEventListener("click",()=>openMap());
   document.getElementById("mapimg").addEventListener("click",()=>openMap());
   document.getElementById("zoneList").addEventListener("click",e=>{const b=e.target.closest(".mapgo");if(!b)return;const p=PIN[b.dataset.pin];if(p)openMap([[p[0],p[1]]],"깜빡이는 점이 찾는 위치입니다. 두 손가락으로 확대·축소할 수 있어요.")});
+  document.addEventListener("click",e=>{const b=e.target.closest&&e.target.closest(".mapgo[data-pts]");if(!b)return;let p=[];try{p=JSON.parse(b.dataset.pts)}catch(x){}if(p.length)openMap(p.map(q=>[q[0],q[1]]),"깜빡이는 점이 ‘"+esc(b.dataset.l)+"’ 위치입니다. 두 손가락으로 확대·축소할 수 있어요.")});
   document.getElementById("seatGo").addEventListener("click",()=>document.getElementById("seatTitle").scrollIntoView({behavior:"smooth"}));
   document.querySelectorAll(".facbtn[data-fac]").forEach(b=>b.addEventListener("click",()=>{const k=b.dataset.fac;
     if(k==="wc"){openMap(FACP.wc.map(p=>[p[0],p[1],"c-wc"]).concat(FACP.fam.map(p=>[p[0],p[1],"c-fam"])),'<i style="background:#1E6BFF"></i>일반 화장실 <i style="background:#14A04A"></i>가족 화장실 · 두 손가락으로 확대하세요');return}
@@ -658,6 +670,30 @@ document.addEventListener("keydown",e=>{if(e.key==="Escape")closeAsk()});
 /* iOS 화면 확대 막기 */
 ["gesturestart","gesturechange"].forEach(t=>document.addEventListener(t,e=>e.preventDefault(),{passive:false}));
 renderNow();renderMust();renderTimeline();renderZones();renderFun();show((location.hash||"").slice(1));
+/* 구글 시트에서 공연 시간표 읽기 (실패하면 앱에 들어 있는 시간표 사용) */
+const SHEET_ID="1LnWMFgv5jWkPFqZ371ZQ4XPKToohmEcFnF9xjW4UByo",SHEET_TAB="창롱 스페이스쉽";
+const BASE_SHOWS=SHOWS.map(s=>({...s}));
+function parseCSV(t){const rows=[];let row=[],f="",q=false;for(let i=0;i<t.length;i++){const c=t[i];if(q){if(c==='"'){if(t[i+1]==='"'){f+='"';i++}else q=false}else f+=c}else if(c==='"')q=true;else if(c===','){row.push(f);f=""}else if(c==='\n'||c==='\r'){if(c==='\r'&&t[i+1]==='\n')i++;row.push(f);rows.push(row);row=[];f=""}else f+=c}if(f!==""||row.length){row.push(f);rows.push(row)}return rows}
+function parseTimes(v){return (v||"").split(/[\s,，、]+/).map(x=>x.trim()).filter(x=>/^\d{1,2}:\d{2}$/.test(x)).map(x=>x.padStart(5,"0"))}
+function applySheet(rows){
+  const hi=rows.findIndex(r=>(r[0]||"").trim()==="번호");if(hi<0)return;
+  const meta={};rows.slice(0,hi).forEach(r=>{if(r[0])meta[r[0].trim()]=(r[1]||"").trim()});
+  const KM={"극장 공연":"thea","관람객 참여형 소규모 이벤트":"event","해설":"talk","체험":"exp"};
+  const list=[];
+  rows.slice(hi+1).forEach(r=>{const id=parseInt(r[0],10);if(!id)return;if((r[8]||"").includes("숨김"))return;
+    const b=BASE_SHOWS[id-1]||{noZone:1,z:""};const kind=KM[(r[1]||"").trim()]||b.kind||"event";
+    const s={...b,ko:r[2]||b.ko||"",zh:r[3]||b.zh||"",en:r[4]||"",loc:r[5]||b.loc||"",fl:parseInt(r[6],10)||b.fl||1,t:parseTimes(r[7]),kind};
+    delete s.thea;delete s.sci;if(kind==="thea")s.thea=1;if(kind==="talk"||kind==="exp")s.sci=1;
+    s.star=MUST.includes(s.ko);list.push(s)});
+  if(!list.length)return;
+  SHOWS.length=0;list.forEach(s=>SHOWS.push(s));
+  Object.keys(EN).forEach(k=>delete EN[k]);SHOWS.forEach(s=>{EN[s.ko]=s.en});
+  if(meta["기준 날짜"]){document.getElementById("hDate").textContent=meta["기준 날짜"]+" 기준";document.getElementById("sDate").textContent=meta["기준 날짜"]+" 공식 시간표 기준"}
+  if(meta["운영 시간"])document.getElementById("hOpen").textContent="운영 "+meta["운영 시간"];
+  renderNow();renderMust();renderTimeline();renderZones();
+}
+fetch(`https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:csv&headers=0&sheet=${encodeURIComponent(SHEET_TAB)}&t=${Date.now()}`,{cache:"no-store"}).then(r=>r.ok?r.text():Promise.reject()).then(x=>applySheet(parseCSV(x))).catch(()=>{});
+
 setInterval(renderNow,30000);
 
 </script>
