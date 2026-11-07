@@ -72,6 +72,8 @@ h3{margin:0;font-size:17px;line-height:1.35}
 .next .name{font-weight:700}
 .next .loc{font-size:13px;color:#B9D3F5}
 .closed{font-size:15px;color:#DDE9FF;margin-top:12px}
+.nexth{margin:16px 0 2px;font-size:18px;color:#fff}
+.nextd{margin:0;font-size:13px;color:#CFE2FF;word-break:keep-all}
 
 /* Timeline */
 .filters{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:12px}
@@ -132,6 +134,7 @@ h3{margin:0;font-size:17px;line-height:1.35}
 .idesc{margin-top:5px;font-size:14px;line-height:1.5}
 .zdesc .src,.idesc .src{display:block;margin-top:3px;font-size:12px;color:var(--muted)}
 .st{margin:8px 0}
+.aka{font-size:12px;font-weight:500;color:var(--muted)}
 .hreq{margin-top:5px;font-size:14px;font-weight:700;color:var(--orange-ink)}
 /* Tab bar */
 nav.tabs{position:fixed;left:0;right:0;bottom:0;background:var(--surface);border-top:1px solid var(--line);
@@ -165,7 +168,7 @@ html.locked #lock{display:flex}
 html.locked header.top,html.locked main,html.locked nav.tabs,html.locked .askview{display:none!important}
 html.locked body{padding-bottom:0}
 .lockt{margin:0;font-size:22px;font-weight:700;color:var(--navy)}
-.lockd{margin:10px 0 0;font-size:16px;color:var(--muted)}
+.lockd{margin:10px 0 0;font-size:16px;color:var(--muted);word-break:keep-all;line-height:1.6}
 /* 길 묻기 */
 .asklist{display:grid;gap:8px;margin-bottom:12px}
 .askbtn{font:inherit;text-align:left;width:100%;background:var(--surface);color:var(--ink);border:1.5px solid var(--line);border-radius:12px;padding:12px 14px;font-size:16px;font-weight:700;cursor:pointer;display:flex;justify-content:space-between;gap:10px;align-items:center}
@@ -214,7 +217,7 @@ html.locked body{padding-bottom:0}
   if(!ok)document.documentElement.classList.add("locked");
 })();
 </script>
-<div id="lock" role="alert"><div><p class="lockt">이용 기간이 끝난 링크입니다</p><p class="lockd">담당자에게 문의해 주세요.</p></div></div>
+<div id="lock" role="alert"><div><p class="lockt">즐거운 여행 되셨나요? 🐳</p><p class="lockd">창롱 스페이스쉽 안내 링크 이용 기간이 끝났습니다.<br>이용해 주셔서 감사합니다.</p></div></div>
 <header class="top">
   <svg viewBox="0 0 100 100" aria-hidden="true"><path fill="#fff" d="M8 58c10-22 34-34 58-30 10 2 18 7 24 14-6-2-12-2-17 0 6 4 9 10 9 16-8-6-18-8-28-6-6 8-16 13-27 12 5-3 8-7 9-12-10 2-20 5-28 6z"/></svg>
   <h1 class="display">창롱 스페이스쉽</h1>
@@ -228,6 +231,8 @@ html.locked body{padding-bottom:0}
   <div class="board" style="margin-top:14px">
     <p class="clock display" id="clock">--:--<small>현지 시각(중국)</small></p>
     <p style="margin:-4px 0 12px;font-size:13px;color:rgba(255,255,255,.78)">이 앱은 인터넷이 연결되어 있어야 사용 가능합니다.</p>
+    <h2 class="nexth">곧 시작하는 공연</h2>
+    <p class="nextd">지금 시각에서 가까운 공연 4개입니다. 전체 시간표는 ‘공연’ 탭에서 보세요.</p>
     <div class="next" id="nextList"></div>
   </div>
   <div class="note warn"><b>극장 공연은 시작 5분이 지나면 입장할 수 없습니다.</b><br>어떤 공연이 극장 공연인지는 <a href="#shows" onclick="show('shows');return false">‘공연’ 탭</a>의 ‘🎭 극장 공연’ 표시로 확인하세요.</div>
@@ -409,6 +414,8 @@ const TALK=["상괭이 재미있는 해설","범고래 재미있는 해설"];
 SHOWS.forEach(s=>{s.kind=s.thea?"thea":s.sci?(TALK.includes(s.ko)?"talk":"exp"):"event"});
 const KIND={thea:"🎭 극장 공연",event:"관람객 참여형 소규모 이벤트",talk:"해설",exp:"체험"};
 const HEIGHT={"星云转盘": "키 1.3m 이상", "海洋升降塔": "키 1.2m 이상", "魔幻光轮": "키 1.2m 이상", "百慕大历险": "키 1.1m 이상", "水母城堡": "키 1.1m 이상", "潜艇寻宝": "키 1.1m 이상", "旋转魔鬼鱼": "키 1.05m 이상", "疯狂车手": "키 1.05m 이상", "星际探险": "키 1.0m 이상", "星际穿梭": "키 0.9m 이상", "飞船总动员": "키 0.9m 이상", "勇者战船": "키 0.9m 이상", "极速飞鱼": "키 0.9m 이상", "童趣蹦跳塔": "키 0.9m 이상", "星河风暴": "키 0.9m 이상", "海洋单轨车": "키 0.9m 이상", "古海幻行": "키 0.9m 이상", "章鱼海盗船": "키 0.9m 이상", "深海奇遇": "키 0.9m 이상", "小小太空站": "키 0.9m 이상", "欢乐碰碰碰": "키 0.9~1.35m만 이용 가능", "缤纷海洋": "키 0.8m 이상", "神奇驾校": "키 0.8m 이상", "旋转星河": "키 0.8m 이상", "极限飞车": "키 0.8m 이상", "水星救援": "키 0.8m 이상", "水晶宫转马": "키 0.7m 이상", "深海潜艇": "키 0.7m 이상 · 1.3m 이하는 보호자 동반"};
+const ALIAS={"深海潜艇":"잠수함 어트랙션","百慕大历险":"버뮤다 스톰"};
+const aka=zh=>ALIAS[zh]?` <span class="aka">${ALIAS[zh]}</span>`:"";
 const hReq=zh=>HEIGHT[zh]?`<div class="hreq">📏 ${HEIGHT[zh]}</div>`:"";
 const kindBadge=k=>`<span class="badge kind">${KIND[k]}</span>`;
 const EN=Object.fromEntries(SHOWS.map(s=>[s.ko,s.en]));
@@ -565,14 +572,14 @@ function renderZones(){
     return `<details class="zone" id="z-${z.id}"><summary><span class="floor">${z.fl}층</span><span class="zt">${z.star?"★ ":""}${esc(z.ko)}</span><span class="zh">${esc(z.zh)} · ${esc(z.en)}</span></summary>
     <div class="zbody">
     ${z.desc?`<p class="zdesc">${esc(z.desc)}</p>`:""}
-    ${z.groups.map(g=>`<h4>${esc(g.h)}</h4><ul class="il">${g.items.map(i=>`<li><b>${esc(i[0])}</b> <span class="zh">${esc(i[1])}</span><br><span class="sub">${esc(i[2])}</span>${i[3]?`<div class="idesc">${esc(i[3])}</div>`:""}${hReq(i[1])}${itemTimes(i[1])}${pinBtn(z.id,i[1])}</li>`).join("")}${g.h===H.sci?sciExtra:""}</ul>`).join("")}
+    ${z.groups.map(g=>`<h4>${esc(g.h)}</h4><ul class="il">${g.items.map(i=>`<li><b>${esc(i[0])}</b>${aka(i[1])} <span class="zh">${esc(i[1])}</span><br><span class="sub">${esc(i[2])}</span>${i[3]?`<div class="idesc">${esc(i[3])}</div>`:""}${hReq(i[1])}${itemTimes(i[1])}${pinBtn(z.id,i[1])}</li>`).join("")}${g.h===H.sci?sciExtra:""}</ul>`).join("")}
     ${shows.length?`<h4>공연 시간</h4>${shows.map(stHtml).join("")}`:""}
     ${(!hasSci&&(sci.length||tour))?`<h4>과학 교육 시간</h4>${tour?`<div class="st"><b>${esc(tour)}</b>${kindBadge("talk")}${timesHtml(["10:00–18:00 · 30분마다"])}</div>`:""}${sci.map(stHtml).join("")}`:""}
-    ${MAPONLY[z.id]?`<h4>지도에 표시된 다른 시설</h4><ul class="il">${MAPONLY[z.id].map(i=>`<li><b>${esc(i[0])}</b> <span class="zh">${esc(i[1])}</span><br><span class="sub">${esc(i[2])}</span>${hReq(i[1])}${pinBtn(z.id,i[1])}</li>`).join("")}</ul>`:""}</div></details>`}).join("");
+    ${MAPONLY[z.id]?`<h4>지도에 표시된 다른 시설</h4><ul class="il">${MAPONLY[z.id].map(i=>`<li><b>${esc(i[0])}</b>${aka(i[1])} <span class="zh">${esc(i[1])}</span><br><span class="sub">${esc(i[2])}</span>${hReq(i[1])}${pinBtn(z.id,i[1])}</li>`).join("")}</ul>`:""}</div></details>`}).join("");
 }
 function renderFun(){
-  document.getElementById("rideTbl").innerHTML=RIDES.map(r=>`<tr><td><b>${esc(r[0])}</b><div class="zh">${esc(r[1])}</div><div class="en">${esc(r[2])}</div>${hReq(r[1])}</td><td>${esc(r[3])}</td></tr>`).join("");
-  document.getElementById("seeTbl").innerHTML=SEE.map(r=>`<tr><td><b>${esc(r[0])}</b><div class="zh">${esc(r[1])}</div><div class="en">${esc(r[2])}</div></td><td>${esc(r[3])}</td></tr>`).join("");
+  document.getElementById("rideTbl").innerHTML=RIDES.map(r=>`<tr><td><b>${esc(r[0])}</b>${aka(r[1])}<div class="zh">${esc(r[1])}</div><div class="en">${esc(r[2])}</div>${hReq(r[1])}</td><td>${esc(r[3])}</td></tr>`).join("");
+  document.getElementById("seeTbl").innerHTML=SEE.map(r=>`<tr><td><b>${esc(r[0])}</b>${aka(r[1])}<div class="zh">${esc(r[1])}</div><div class="en">${esc(r[2])}</div></td><td>${esc(r[3])}</td></tr>`).join("");
   document.getElementById("foodList").innerHTML=FOOD.map(f=>`<div class="card"><h3>${esc(f[0])}</h3><div class="where">📍 ${esc(f[1])}</div></div>`).join("");
 }
 const VIEWS=["now","shows","map","zones","fun","fac"];
